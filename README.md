@@ -23,6 +23,8 @@ boundaries, analyze class performance, and download grading reports.
 
 ## New Features
 
+-   Added a Jump to issue toggle that user can use when previewing 
+    data issues in their workbook to decide, wether to import or not
 -   Added an Excel preview and validation summary so instructors can
     review data before grading.
 -   Added marks distribution and grade distribution charts, where an

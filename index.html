@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap" rel="stylesheet">
 <title>BITS Pilani Digital – Advanced Grading Console</title>
-<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
 <style>
 /* Visual redesign based on the Figma export; application logic remains below. */
@@ -330,6 +330,27 @@ body:has(#dashboardScreen:not([hidden])) .brand-logo-crop{cursor:pointer}
 .course-name small{white-space:nowrap}
 .course-name small::after{content:":"}
 .course-name strong,.course-name span{overflow-wrap:anywhere}
+
+/* ===== Import Preview: clean, evenly spaced columns ===== */
+.welcome-shell{transition:width .25s ease}
+.welcome-shell.has-preview{width:min(780px,100%)}
+.mini-table.validation-preview>div,.mini-table.validation-preview #previewRows>div{grid-template-columns:52px minmax(112px,1.05fr) minmax(132px,1.4fr) 86px 86px minmax(150px,1.5fr);column-gap:14px;align-items:center;padding:10px 14px}
+.mini-table.validation-preview #previewRows>div{font-size:var(--t2);line-height:1.35}
+.mini-table.validation-preview .mini-head{align-items:end;line-height:1.25;padding-top:10px;padding-bottom:10px}
+.mini-table.validation-preview span{min-width:0;overflow-wrap:anywhere}
+.mini-table.validation-preview .mini-head>span:nth-child(1),.mini-table.validation-preview .mini-head>span:nth-child(4),.mini-table.validation-preview .mini-head>span:nth-child(5),
+.mini-table.validation-preview #previewRows>div>span:nth-child(1),.mini-table.validation-preview #previewRows>div>span:nth-child(4),.mini-table.validation-preview #previewRows>div>span:nth-child(5){text-align:center}
+.mini-table.validation-preview #previewRows>div>span:nth-child(1){color:#9a95a8}
+.mini-table.validation-preview #previewRows>div>span:nth-child(2){color:var(--ink);font-weight:600}
+.course-clean{display:block;color:#1c8a66;font-weight:700}
+.course-was{display:block;margin-top:2px;color:#8b8795;font-size:var(--t1);text-decoration:line-through}
+.st-pill{display:inline-block;padding:3px 10px;border-radius:12px;font-size:var(--t1);font-weight:700;line-height:1.35}
+.st-note{display:block;margin-top:3px;color:#8b8795;font-size:var(--t1)}
+.st-ok{color:#1c7a5a;background:#e6f6ef}
+.st-info{color:#5b2bb0;background:#f0e6fd}
+.st-warn{color:#7b4a00;background:#fff0c9}
+.st-bad{color:#b42318;background:#fde4e2}
+@media(max-width:700px){.workbook-preview .mini-table{min-width:700px}}
 </style>
 </head>
 
@@ -445,6 +466,7 @@ const professorStorageKey="bits-grading-console-last-professor";
 try{ instructor.value=localStorage.getItem(professorStorageKey)||""; }catch(e){}
 
 const EXCEL_EXT=/\.xlsx$/i;
+const READER_TITLE="The Excel reader could not be loaded. Check your internet connection and reload the page.";
 const NOT_EXCEL_TITLE="Only Excel files (.xlsx) can be uploaded. Please choose a different file.";
 file.onchange=e=>handleFile(e.target.files[0],false);
 
@@ -474,6 +496,7 @@ function handleFile(selectedFile,fromDrop){
   r.onload=ev=>{
     if(currentUpload!==uploadSequence) return;
     try{
+      if(typeof XLSX==="undefined"){ const err=new Error("SheetJS is not loaded."); err.readerMissing=true; throw err; }
       /* A real .xlsx is a ZIP archive ("PK\x03\x04"). This rejects text/CSV files that were simply renamed. */
       if(String(ev.target.result).slice(0,4)!=="PK\u0003\u0004"){ const err=new Error("File contents are not an Excel workbook."); err.notExcel=true; throw err; }
       const wb=XLSX.read(ev.target.result,{type:"binary",cellText:true});
@@ -488,7 +511,7 @@ function handleFile(selectedFile,fromDrop){
       renderValidationSummary();
       workbookIsValid=true;
     }catch(error){
-      rejectFile(error.message || "The workbook could not be read. Please upload a valid .xlsx file.",error.notExcel?NOT_EXCEL_TITLE:undefined);
+      rejectFile(error.message || "The workbook could not be read. Please upload a valid .xlsx file.",error.notExcel?NOT_EXCEL_TITLE:error.readerMissing?READER_TITLE:undefined);
     }
   };
   r.onerror=()=>{
@@ -564,6 +587,7 @@ function resetGradingSession(){
   workbookPreview.hidden=true;
   previewRows.innerHTML="";
   issueNav.hidden=true; issueRows=[]; issueIdx=-1; studentPage=1;
+  document.querySelector(".welcome-shell").classList.remove("has-preview");
   validationSummary.hidden=true;
   validationSummary.innerHTML="";
   validationReport=null;
@@ -596,8 +620,12 @@ const MISSING_CONFIRM_MESSAGE="Your data has missing values that will not be inc
 function cellText(value){ return String(value ?? "").trim(); }
 function normalCourseKey(value){ return cellText(value).replace(/\s+/g," ").toLocaleLowerCase(); }
 function titleQuality(value){
+  /* tie-break only: Title Case > mixed > lower > ALL CAPS */
   const text=cellText(value);
-  return (text===text.toUpperCase()?2:0) + (text.split(" ").every(word=>!/[a-z]/.test(word) || /^[A-Z]/.test(word))?1:0);
+  const isUpper=/[A-Z]/.test(text)&&text===text.toUpperCase();
+  const isLower=text===text.toLowerCase();
+  const isTitle=text.split(" ").every(word=>!/[a-z]/i.test(word)||/^[A-Z]/.test(word));
+  return isUpper?0:isTitle?3:isLower?1:2;
 }
 function levenshtein(a,b){
   const row=Array.from({length:b.length+1},(_,i)=>i);
@@ -638,30 +666,45 @@ function validateWorkbook(rows){
   const nonBlank=filled.map(({row,index})=>({row:usedCols.map(col=>row[col]),index}));
   const matrix=nonBlank.map(item=>item.row); const columnMap=identifyColumns(matrix);
   const source=nonBlank.filter((item,position)=>position!==columnMap.headerRow);
+  if(!source.length) throw new Error("The worksheet has no student rows.");
   const records=[]; const issues=[]; const groups=new Map();
   source.forEach(({row,index})=>{
     const originalId=cellText(row[columnMap.id]); const originalCourse=cellText(row[columnMap.course]); const originalMark=cellText(row[columnMap.mark]);
     const missingFields=[]; if(!originalId) missingFields.push("BITS ID"); if(!originalCourse) missingFields.push("Course"); if(!originalMark) missingFields.push("Total Marks");
     const reasons=[]; if(!originalId) reasons.push("BITS ID is blank"); if(!originalCourse) reasons.push("Course is blank");
-    const numericMark=Number(originalMark); if(!originalMark) reasons.push("Total Marks is blank"); else if(!Number.isFinite(numericMark)) reasons.push("Total Marks is not numeric"); else if(numericMark<0||numericMark>100) reasons.push("Total Marks must be between 0 and 100");
+    const numericMark=/^[+-]?(\d+\.?\d*|\.\d+)$/.test(originalMark)?Number(originalMark):NaN; if(!originalMark) reasons.push("Total Marks is blank"); else if(!Number.isFinite(numericMark)) reasons.push("Total Marks is not numeric"); else if(numericMark<0||numericMark>100) reasons.push("Total Marks must be between 0 and 100");
     const record={"BITS ID":originalId,Course:originalCourse,"Total Marks":(originalMark&&Number.isFinite(numericMark))?Math.ceil(numericMark):null,originalCourse,originalMark,rowNumber:index+1,changes:[],issues:reasons,missingFields};
     if(Number.isFinite(numericMark)&&!Number.isInteger(numericMark)) record.changes.push("fractional mark rounded");
     if(!reasons.length){ const key=normalCourseKey(originalCourse); if(!groups.has(key)) groups.set(key,[]); groups.get(key).push(record); }
     records.push(record);
   });
   const canonical=new Map();
-  groups.forEach((group,key)=>canonical.set(key,[...group].sort((a,b)=>titleQuality(b.originalCourse)-titleQuality(a.originalCourse))[0].originalCourse.replace(/\s+/g," ")));
+  groups.forEach((group,key)=>{
+    const counts=new Map();
+    group.forEach(r=>{ const sp=r.originalCourse.replace(/\s+/g," "); counts.set(sp,(counts.get(sp)||0)+1); });
+    canonical.set(key,[...counts.entries()].sort((a,b)=>b[1]-a[1]||titleQuality(b[0])-titleQuality(a[0]))[0][0]);
+  });
   groups.forEach((group,key)=>group.forEach(record=>{ const clean=canonical.get(key); if(record.Course!==clean){ record.Course=clean; record.changes.push("course name normalised"); } }));
   groups.forEach((group,key)=>{
     const possible=[...groups.keys()].filter(other=>other!==key && groups.get(other).length>=2 && groups.get(other).length>group.length).map(other=>({other,distance:levenshtein(key,other)})).filter(item=>item.distance>0&&item.distance<=Math.max(1,Math.floor(key.length*.15))).sort((a,b)=>a.distance-b.distance);
     if(possible.length===1 || (possible.length>1&&possible[0].distance<possible[1].distance)) group.forEach(record=>{ record.Course=canonical.get(possible[0].other); record.changes.push("course-name typo corrected"); });
   });
+  /* Duplicates (same BITS ID + course): the first occurrence is kept; only the extra copies are excluded. */
   const seen=new Map();
-  records.filter(record=>!record.issues.length).forEach(record=>{ const key=`${record["BITS ID"]}::${record.Course}`; if(!seen.has(key)) seen.set(key,[]); seen.get(key).push(record); });
-  seen.forEach(group=>{ if(group.length>1) group.forEach(record=>record.issues.push("duplicate BITS ID and course record — review required")); });
-  records.forEach(record=>{ if(record.issues.length) issues.push({rowNumber:record.rowNumber,reason:record.issues.join("; "),missing:record.missingFields.length>0}); });
-  const validRecords=records.filter(record=>!record.issues.length).map(({originalCourse,originalMark,rowNumber,changes,issues,missingFields,...record})=>record);
-  const changes={fractional:records.filter(r=>r.changes.includes("fractional mark rounded")).length,normalised:records.filter(r=>r.changes.includes("course name normalised")).length,typos:records.filter(r=>r.changes.includes("course-name typo corrected")).length};
+  records.filter(record=>!record.issues.length).forEach(record=>{
+    const key=`${record["BITS ID"].toUpperCase()}::${record.Course}`;
+    const first=seen.get(key);
+    if(!first){ seen.set(key,record); return; }
+    const sameMark=Number(first.originalMark)===Number(record.originalMark);
+    record.isDuplicate=true; record.duplicateOf=first.rowNumber; record.duplicateConflict=!sameMark;
+    first.duplicatesRemoved=(first.duplicatesRemoved||0)+1;
+    record.issues.push(sameMark
+      ? `duplicate of row ${first.rowNumber} — extra copy removed`
+      : `duplicate of row ${first.rowNumber} with different marks — extra copy removed, row ${first.rowNumber} kept`);
+  });
+  records.forEach(record=>{ if(record.issues.length) issues.push({rowNumber:record.rowNumber,reason:record.issues.join("; "),missing:record.missingFields.length>0,duplicate:!!record.isDuplicate}); });
+  const validRecords=records.filter(record=>!record.issues.length).map(({originalCourse,originalMark,rowNumber,changes,issues,missingFields,isDuplicate,duplicateOf,duplicateConflict,duplicatesRemoved,...record})=>record);
+  const changes={fractional:records.filter(r=>r.changes.includes("fractional mark rounded")).length,normalised:records.filter(r=>r.changes.includes("course name normalised")).length,typos:records.filter(r=>r.changes.includes("course-name typo corrected")).length,duplicates:records.filter(r=>r.isDuplicate).length,duplicateConflicts:records.filter(r=>r.duplicateConflict).length};
   const missingRows=records.filter(r=>r.missingFields.length);
   const columnNumbers={id:usedCols[columnMap.id]+1,course:usedCols[columnMap.course]+1,mark:usedCols[columnMap.mark]+1};
   return {records,validRecords,issues,changes,columnMap,columnNumbers,missingRows};
@@ -669,6 +712,7 @@ function validateWorkbook(rows){
 
 function renderWorkbookPreview(){
   workbookPreview.hidden=false;
+  document.querySelector(".welcome-shell").classList.add("has-preview");
   const missingCount=validationReport.missingRows.length;
   const totalRows=validationReport.records.length;
   previewDescription.textContent=`${totalRows} row${totalRows===1?"":"s"} imported`+(missingCount?` · ${missingCount} with missing values highlighted`:"");
@@ -679,21 +723,36 @@ function renderWorkbookPreview(){
     row.dataset.row=record.rowNumber;
     const hasMissing=record.missingFields.length>0;
     if(hasMissing) row.className="row-missing"; else if(record.issues.length) row.className="row-invalid";
-    const status=hasMissing ? MISSING_ROW_MESSAGE : record.issues.length ? "Review required" : record.changes.length ? "Cleaned" : "Validated";
-    const displayCourse=record.originalCourse!==record.Course ? `${record.originalCourse} → ${record.Course}` : record.Course;
-    const missingAt={1:record.missingFields.includes("BITS ID"),2:record.missingFields.includes("Course"),3:record.missingFields.includes("Total Marks")};
-    [record.rowNumber,record["BITS ID"],displayCourse,record.originalMark,record["Total Marks"]===null?"—":record["Total Marks"],status].forEach((value,index)=>{
-      const cell=document.createElement("span");
-      cell.textContent=missingAt[index] ? "(missing)" : (value ?? "");
-      if(missingAt[index]) cell.className="is-missing";
-      else{
-        if(index===3&&record.changes.includes("fractional mark rounded")) cell.className="original-value";
-        if(index===2&&record.originalCourse!==record.Course) cell.className="cleaned-value";
-        if(index===4&&record.changes.includes("fractional mark rounded")) cell.className="cleaned-value";
-      }
-      if(index===5&&record.issues.length) cell.className=hasMissing?"is-missing":"change-note";
-      row.appendChild(cell);
-    });
+    let status,kind;
+    if(hasMissing){ status=MISSING_ROW_MESSAGE; kind="bad"; }
+    else if(record.isDuplicate){ status="Duplicate — removed"; kind="warn"; }
+    else if(record.issues.length){ status="Review required"; kind="warn"; }
+    else if(record.duplicatesRemoved){ status=`Kept · ${record.duplicatesRemoved} duplicate${record.duplicatesRemoved===1?"":"s"} removed`; kind="ok"; }
+    else if(record.changes.length){ status="Cleaned"; kind="info"; }
+    else{ status="Validated"; kind="ok"; }
+    const rounded=record.changes.includes("fractional mark rounded");
+    const courseChanged=record.originalCourse!==record.Course;
+    const cells=[];
+    const cell=(text,cls)=>{ const c=document.createElement("span"); c.textContent=text; if(cls) c.className=cls; cells.push(c); return c; };
+    cell(record.rowNumber);
+    record.missingFields.includes("BITS ID") ? cell("(missing)","is-missing") : cell(record["BITS ID"]);
+    if(record.missingFields.includes("Course")) cell("(missing)","is-missing");
+    else if(courseChanged){
+      const c=cell("");
+      const now=document.createElement("span"); now.className="course-clean"; now.textContent=record.Course;
+      const was=document.createElement("span"); was.className="course-was"; was.textContent=record.originalCourse; was.title="Original value";
+      c.append(now,was);
+    } else cell(record.Course);
+    record.missingFields.includes("Total Marks") ? cell("(missing)","is-missing") : cell(record.originalMark,rounded?"original-value":"");
+    cell(record["Total Marks"]===null?"—":record["Total Marks"],rounded?"cleaned-value":"");
+    const st=cell(""); const pill=document.createElement("span"); pill.className="st-pill st-"+kind; pill.textContent=status;
+    if(record.issues.length) pill.title=record.issues.join("; ");
+    st.appendChild(pill);
+    let note="";
+    if(record.isDuplicate) note=record.duplicateConflict?`Marks differ from row ${record.duplicateOf}`:`Same as row ${record.duplicateOf}`;
+    else if(record.issues.length&&!hasMissing) note=record.issues.join("; ");
+    if(note){ const n=document.createElement("span"); n.className="st-note"; n.textContent=note; st.appendChild(n); }
+    row.append(...cells);
     frag.appendChild(row);
   });
   previewRows.appendChild(frag);
@@ -801,6 +860,7 @@ function renderValidationSummary(){
   }
   /* YELLOW: rows will be excluded */
   const n=issues.length;
+  const dupRows=issues.filter(i=>i.duplicate).length;
   const has=word=>issues.some(i=>i.reason.includes(word));
   const names=[];
   if(missingRows.length) names.push("missing data");
@@ -808,7 +868,13 @@ function renderValidationSummary(){
   if(has("between 0 and 100")) names.push("marks outside 0–100");
   if(has("duplicate")) names.push("duplicate records");
   const onlyMissing=missingRows.length===n;
-  validationSummary.appendChild(bannerRow(ICON_WARN,`Excel file has data issues (${names.join(", ")}).`,`There ${n===1?"is 1 row":`are ${n} rows`} with ${onlyMissing?"missing data":"data issues"}. If you proceed, ${n===1?"this row":"these rows"} will be excluded from the grade report.`));
+  if(dupRows===n){
+    /* only duplicates: the first copy of each is still graded */
+    const conflicts=changes.duplicateConflicts;
+    validationSummary.appendChild(bannerRow(ICON_WARN,`${dupRows} duplicate row${dupRows===1?"":"s"} found.`,`Only the first copy of each record will be graded. The extra ${dupRows===1?"copy is":"copies are"} excluded from the grade report.`+(conflicts?` ${conflicts===1?"1 extra copy has":`${conflicts} extra copies have`} different marks from the first copy — please double-check.`:"")));
+    return;
+  }
+  validationSummary.appendChild(bannerRow(ICON_WARN,`Excel file has data issues (${names.join(", ")}).`,`There ${n===1?"is 1 row":`are ${n} rows`} with ${onlyMissing?"missing data":"data issues"}. If you proceed, ${n===1?"this row":"these rows"} will be excluded from the grade report.`+(dupRows?" For duplicate records, the first copy is kept.":"")));
 }
 
 continueToGrading.onclick=()=>{
@@ -1351,19 +1417,23 @@ download.onclick=()=>{
   const minT=Math.floor(elapsed/60000);
   const secT=Math.floor((elapsed%60000)/1000);
 
+  /* a text cell starting with = + - @ would run as a formula when opened in Excel */
+  const safeCell=value=>/^[=+\-@\t\r]/.test(String(value??""))?"'"+value:value;
   const csvEscape=value=>`"${String(value ?? "").replace(/"/g,'""')}"`;
   const csv=[
-    ["Instructor",instructor.value],
-    ["Course",course.value],
+    ["Instructor",safeCell(instructor.value)],
+    ["Course",safeCell(course.value)],
     [],
     ["BITS ID","Total Marks","Grade"],
-    ...selectedRows.map(d=>[d["BITS ID"],d["Total Marks"],gradeForMark(d["Total Marks"])])
+    ...selectedRows.map(d=>[safeCell(d["BITS ID"]),d["Total Marks"],gradeForMark(d["Total Marks"])])
   ].map(row=>row.map(csvEscape).join(",")).join("\r\n")+"\r\n";
 
   const a=document.createElement("a");
-  a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));
+  const csvUrl=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));
+  a.href=csvUrl;
   a.download="grades.csv";
   a.click();
+  setTimeout(()=>URL.revokeObjectURL(csvUrl),1500);
 
   if(finalizeCount === 1){
     thankyou.innerText =
@@ -1389,7 +1459,10 @@ window.runWorkbookValidationTests=()=>{
   const partialHeaders=report([["BITS ID","Module","Points"],["00123","Data Science","80"]]);
   assert(partialHeaders.validRecords.length===1,"missing header names should fall back to structure");
   const duplicates=report([["BITS ID","Course","Total Marks"],["00123","Data Science","80"],["00123","data science","81"]]);
-  assert(duplicates.validRecords.length===0&&duplicates.issues.length===2,"duplicates should require review");
+  assert(duplicates.validRecords.length===1&&duplicates.issues.length===1,"only the extra copy of a duplicate is excluded");
+  assert(duplicates.validRecords[0]["Total Marks"]===80&&duplicates.changes.duplicateConflicts===1,"first copy is kept and a differing mark is flagged");
+  const exactDupes=report([["BITS ID","Course","Total Marks"],["00123","Data Science","80"],["00123","Data Science","80"],["00123","Data Science","80"],["00124","Data Science","70"]]);
+  assert(exactDupes.validRecords.length===2&&exactDupes.issues.length===2&&exactDupes.changes.duplicateConflicts===0&&!("isDuplicate" in exactDupes.validRecords[0]),"exact duplicates collapse to one clean record");
   const blanks=report([["BITS ID","Course","Total Marks"],["","Data Science","80"],["00124","","80"],["00125","Data Science",""]]);
   assert(blanks.issues.length===3,"blank required fields should be flagged");
   const invalidMarks=report([["BITS ID","Course","Total Marks"],["001","Data Science","Nope"],["002","Data Science","-1"],["003","Data Science","101"]]);
@@ -1408,7 +1481,14 @@ window.runWorkbookValidationTests=()=>{
   const missing=report([["BITS ID","Course","Total Marks"],["","Data Science","80"],["002","","81"],["003","Data Science",""],["004","Data Science","82"]]);
   assert(missing.missingRows.length===3&&missing.validRecords.length===1,"rows with missing values are flagged and removed");
   assert(missing.missingRows.every(r=>r.missingFields.length===1),"the missing field is recorded per row");
-  return "15 validation tests passed";
+    const mixedCaps=report([["BITS ID","Course","Total Marks"],["1","Data Science","50"],["2","DATA SCIENCE","60"],["3","Data Science","70"]]);
+  assert(mixedCaps.validRecords.every(r=>r.Course==="Data Science"),"the most common spelling wins and ALL CAPS is not preferred");
+  const oddMarks=report([["BITS ID","Course","Total Marks"],["1","Data Science","0x10"],["2","Data Science","1e2"],["3","Data Science"," 75 "],["4","Data Science",".5"]]);
+  assert(oddMarks.validRecords.length===2&&oddMarks.issues.length===2,"hex/exponent marks are rejected; plain decimals accepted");
+  const idCase=report([["BITS ID","Course","Total Marks"],["2024A7PS1","Data Science","50"],["2024a7ps1","Data Science","50"]]);
+  assert(idCase.validRecords.length===1,"IDs differing only by case are duplicates");
+  assert(rejects([["BITS ID","Course","Total Marks"]])!=="","a header-only sheet is rejected");
+  return "21 validation tests passed";
 };
 </script>
 </body>
