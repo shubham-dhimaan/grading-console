@@ -35,6 +35,7 @@ boundaries, analyze class performance, and download grading reports.
 
 ## Data Validation and Cleaning Logic
 
+-   Added a rule that doesn't allow worbooks with multiple sheets to be uploaded (only one sheet allowed)
 -   Added file validation to reject uploads with fewer or more than 3 columns.
 -   Added warnings for missing values and marks outside the valid range (0–100), highlighting affected rows and excluding them from import if the user proceeds.
 -   Added automatic rounding of decimal marks to the nearest whole number, with a notification informing the user that the data was tidied up.
