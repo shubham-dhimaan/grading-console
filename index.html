@@ -13,18 +13,18 @@
 /* Visual redesign based on the Figma export; application logic remains below. */
 :root{--font:"Source Sans 3","Myriad Pro","Segoe UI",Carlito,"Helvetica Neue",Arial,sans-serif;--navy:#8010e8;--navy-soft:#690bc4;--sky:#c9a5f5;--sky-soft:#f5eeff;--ink:#26245c;--muted:#716b83;--line:#e9e0f3;--canvas:#f8f5fb;--white:#fff;--success:#1c8a66;--red:#e42c35}
 *{box-sizing:border-box} body{margin:0;min-width:320px;color:var(--ink);background:var(--canvas);font-family:var(--font)} button,input,select{font:inherit}
-.app-header{height:80px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(24px,5vw,76px);background:var(--white);border-bottom:1px solid var(--line)}
+.app-header{height:80px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(24px,calc(5vw*var(--vk)),76px);background:var(--white);border-bottom:1px solid var(--line)}
 .brand{display:flex;align-items:center;gap:13px;min-width:290px}.brand-logo-crop{position:relative;width:202px;height:64px;overflow:hidden;flex:0 0 auto}.brand-logo-crop img{position:absolute;width:202px;height:202px;max-width:none;top:-63px;left:0;object-fit:contain}.brand span{padding-left:13px;color:var(--muted);border-left:1px solid var(--line);font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}.secure-note{color:var(--muted);font-size:12px}
 .container{width:min(1180px,calc(100% - 40px));margin:0 auto;padding:36px 0 48px}.setup-card,.panel,.metric-card{background:var(--white);border:1px solid rgba(128,16,232,.1);box-shadow:0 12px 35px rgba(80,30,120,.08)}.setup-card{max-width:760px;padding:28px;margin:0 auto 28px;border-radius:18px}.section-heading{padding-bottom:18px;margin-bottom:20px;border-bottom:1px solid var(--line)}.eyebrow{margin-bottom:8px;color:var(--navy);font-size:10px;font-weight:800;letter-spacing:.12em}.section-heading h1{margin:0;color:var(--ink);font-size:24px}.section-heading p,.panel-heading p{margin:5px 0 0;color:var(--muted);font-size:12px}
 .controls{display:grid;grid-template-columns:1fr 1fr;gap:16px}.field-label{display:block;margin-bottom:8px;color:#34374c;font-size:12px;font-weight:700}.text-input,.course-strip select,.grade select{width:100%;height:44px;padding:0 12px;color:var(--ink);background:#fff;border:1px solid #d9dce6;border-radius:8px;outline:0}.text-input:focus,.course-strip select:focus,.grade select:focus{border-color:var(--sky);box-shadow:0 0 0 3px rgba(201,165,245,.25)}
 .drop-zone{position:relative;min-height:110px;padding:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--muted);background:#fafbfc;border:1.5px dashed #c9cdd9;border-radius:10px;text-align:center;cursor:pointer}.drop-zone:hover,.drop-zone:focus-within{border-color:var(--sky);background:var(--sky-soft)}.remove-file{position:absolute;top:9px;right:9px;width:29px;height:29px;display:grid;place-items:center;padding:0;color:var(--navy);background:#fff;border:1px solid var(--line);border-radius:50%;font-size:17px;line-height:1;cursor:pointer;box-shadow:0 3px 10px rgba(128,16,232,.1)}.remove-file[hidden]{display:none!important}.remove-file:hover{color:#fff;background:var(--navy);border-color:var(--navy)}.upload-icon{width:34px;height:34px;display:grid;place-items:center;margin-bottom:6px;color:var(--navy);background:var(--sky-soft);border-radius:50%;font-weight:800}.drop-zone strong{color:var(--ink);font-size:13px}.drop-zone span,.drop-zone small{margin-top:3px;font-size:11px}.drop-zone small{font-size:9px;font-weight:700;letter-spacing:.08em}.file-guidance{grid-column:1/-1;padding:10px 12px;color:var(--muted);background:#fafbfc;border:1px solid var(--line);border-radius:8px;font-size:11px}.file-guidance summary{color:var(--navy);font-weight:700;cursor:pointer}.file-guidance p{margin:7px 0 0;line-height:1.5}
 .notice{margin:0 0 18px;color:var(--success);font-size:13px;font-weight:600}.dashboard-intro{display:flex;align-items:end;justify-content:space-between;gap:20px;margin:10px 0 20px}.dashboard-intro h2{margin:0;color:var(--navy);font-size:25px}.dashboard-intro p{margin:5px 0 0;color:var(--muted);font-size:12px}.course-strip{display:grid;grid-template-columns:220px 1fr auto;align-items:center;gap:24px;padding:15px 20px;margin-bottom:18px;background:var(--navy);border-radius:11px;box-shadow:0 9px 25px rgba(128,16,232,.16)}.course-strip label{display:block;margin-bottom:5px;color:var(--sky);font-size:9px;font-weight:800;letter-spacing:.12em}.course-strip select{height:38px;color:#fff;background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.23)}.course-strip select option{color:var(--ink);background:#fff}.course-name{padding-left:20px;border-left:1px solid rgba(255,255,255,.14);color:#fff}.course-name small,.course-name strong,.course-name span{display:block}.course-name small{margin-top:7px;color:var(--sky);font-size:8px;font-weight:800;letter-spacing:.1em}.course-name small:first-child{margin-top:0}.course-name strong{margin-top:3px;font:600 14px Georgia,serif}.course-name span{margin-top:3px;color:#d7c7eb;font-size:10px;overflow-wrap:anywhere}.course-timer{padding-left:20px;border-left:1px solid rgba(255,255,255,.14);text-align:center}.course-timer small{display:block;margin-bottom:4px;color:var(--sky);font-size:8px;font-weight:800;letter-spacing:.1em}.course-timer .timer-wrapper{margin:0}.course-timer .timer-text{color:#fff}
 .metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}.metric-card{min-height:112px;padding:17px;border-radius:10px}.metric-card span{display:block;color:var(--muted);font-size:9px;font-weight:800;letter-spacing:.08em}.metric-card b{display:block;margin:9px 0 3px;color:var(--ink);font-size:25px}.metric-card small{color:var(--muted);font-size:10px}.metric-card.accent{background:var(--navy);border-color:var(--navy)}.metric-card.accent span,.metric-card.accent small{color:#dfd2f0}.metric-card.accent b{color:#fff}
-.workspace{display:grid;grid-template-columns:1.4fr .85fr;align-items:start;gap:18px}.panel{padding:20px;border-radius:11px}.panel-heading{display:flex;align-items:start;justify-content:space-between;margin-bottom:12px}.panel-heading h3{margin:0;color:var(--navy);font-size:18px}.hist-wrap{position:relative;height:clamp(250px,29vw,340px);min-height:250px;overflow:hidden}.hist-wrap canvas{display:block;width:100%;height:100%;max-width:none;margin:0}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}.stat{padding:10px 6px;text-align:center;background:#fafbfc;border:1px solid var(--line);border-radius:7px;color:var(--muted);font-size:10px}.stat b{display:block;margin-top:4px;color:var(--ink);font-size:15px}.grade-summary{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}.grade-summary span{padding:5px 8px;color:var(--navy);background:var(--sky-soft);border-radius:5px;font-size:11px;font-weight:700;transition:.25s}.grade-summary span.pulse{transform:scale(1.08);background:#e6d4fb}
+.workspace{display:grid;grid-template-columns:1.4fr .85fr;align-items:start;gap:18px}.panel{padding:20px;border-radius:11px}.panel-heading{display:flex;align-items:start;justify-content:space-between;margin-bottom:12px}.panel-heading h3{margin:0;color:var(--navy);font-size:18px}.hist-wrap{position:relative;height:clamp(250px,calc(29vw*var(--vk)),340px);min-height:250px;overflow:hidden}.hist-wrap canvas{display:block;width:100%;height:100%;max-width:none;margin:0}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}.stat{padding:10px 6px;text-align:center;background:#fafbfc;border:1px solid var(--line);border-radius:7px;color:var(--muted);font-size:10px}.stat b{display:block;margin-top:4px;color:var(--ink);font-size:15px}.grade-summary{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}.grade-summary span{padding:5px 8px;color:var(--navy);background:var(--sky-soft);border-radius:5px;font-size:11px;font-weight:700;transition:.25s}.grade-summary span.pulse{transform:scale(1.08);background:#e6d4fb}
 .grade-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.grade{padding:11px;background:#fafbfc;border:1px solid var(--line);border-radius:8px;transition:.25s}.grade>strong{display:block;margin-bottom:8px;color:var(--navy);font-size:13px}.grade .min,.grade .max{display:grid;grid-template-columns:36px 1fr;align-items:center;gap:6px;margin-top:5px;color:var(--muted);font-size:10px}.grade select{height:31px;padding:0 6px;font-size:11px}.min select{background:#fff7ed}.max select{background:#eff6ff}.grade.lift{transform:translateY(-2px);box-shadow:0 8px 20px rgba(80,30,120,.12)}.error{min-height:18px;margin-top:10px;color:#b91c1c;font-size:12px}.actions{display:flex;gap:10px;align-items:center;margin-top:6px}.actions button{height:40px;padding:0 13px;border-radius:7px;border:1px solid var(--navy);background:var(--navy);color:#fff;font-size:12px;font-weight:700;cursor:pointer}.actions button.secondary{color:var(--navy);background:#fff;border-color:#d8dae4}.actions button:disabled{opacity:.45;cursor:not-allowed}.timer-wrapper{display:flex;justify-content:center;margin-top:14px}.timer-clock{position:relative;width:90px;height:90px}.timer-clock svg{transform:rotate(-90deg)}.timer-text{position:absolute;inset:0;display:grid;place-items:center;color:var(--navy);font-size:14px;font-weight:700}
 .students{grid-column:1/-1;overflow:hidden}.student-toolbar{display:flex;justify-content:space-between;gap:16px;margin-bottom:14px}.search-box{width:260px;height:36px;padding:0 10px;display:flex;align-items:center;gap:7px;border:1px solid #dcdfe7;border-radius:7px;color:var(--muted)}.search-box input{width:100%;border:0;outline:0;color:var(--ink);background:transparent;font-size:11px}.student-table-wrap{overflow-x:auto}.student-table{width:100%;min-width:620px;border-collapse:collapse}.student-table th{height:34px;padding:0 12px;color:#898d9d;background:#f8f9fb;font-size:9px;letter-spacing:.07em;text-align:left}.student-table td{height:43px;padding:0 12px;color:#5f6377;border-top:1px solid #eef0f4;font-size:11px}.student-table td strong{color:#34374a}.grade-chip{display:inline-grid;min-width:28px;height:21px;padding:0 5px;place-items:center;color:#0e667b;background:#dff5fa;border-radius:5px;font-size:10px;font-weight:800}.grade-chip.grade-D,.grade-chip.grade-E{color:#9d3038;background:#fbe7e9}.table-footer{margin-top:12px;color:var(--muted);font-size:10px}.empty-state{padding:24px;text-align:center;color:var(--muted);font-size:12px}.page-footer{margin-top:28px;color:var(--muted);font-size:10px;text-align:center}
 /* Two-screen Figma flow: setup first, grading dashboard second. */
-.welcome-page{min-height:calc(100vh - 80px);display:flex;align-items:center;padding:42px 20px;background:radial-gradient(circle at 50% 42%,rgba(201,165,245,.22),transparent 36%),var(--canvas)}.welcome-shell{width:min(540px,100%);margin:auto}.welcome-page .setup-card{max-width:none;margin:0}.welcome-page .controls{grid-template-columns:1fr}.primary-button{width:100%;height:46px;margin-top:18px;border:1px solid var(--navy);border-radius:8px;color:#fff;background:var(--navy);font-size:13px;font-weight:750;cursor:pointer}.primary-button:hover{background:var(--navy-soft)}.form-error{min-height:17px;margin-top:9px;color:var(--red);font-size:11px}.format-warning{margin-top:12px;padding:10px 12px;color:#7b4a00;background:#fff8e8;border:1px solid #f0d28b;border-radius:7px;font-size:11px;line-height:1.45}.workbook-preview{margin-top:16px;padding-top:16px;border-top:1px solid var(--line)}.preview-title{margin-bottom:9px;color:var(--ink);font-size:12px;font-weight:800}.preview-title small{display:block;margin-top:3px;color:var(--muted);font-size:10px;font-weight:500}.mini-table{overflow:hidden;border:1px solid var(--line);border-radius:6px}.mini-table>div{display:grid;grid-template-columns:1.4fr 1fr .8fr;padding:7px 10px;color:var(--muted);font-size:9px;border-bottom:1px solid #eef0f4}.mini-table>div:last-child{border:0}.mini-table .mini-head{color:var(--navy);background:#edf0f6;font-weight:800;letter-spacing:.04em}#previewRows{display:contents}.mini-table #previewRows>div{display:grid;grid-template-columns:1.4fr 1fr .8fr;padding:7px 10px;color:var(--muted);font-size:9px;border-bottom:1px solid #eef0f4}.dashboard-page{min-height:calc(100vh - 80px)}.dashboard-page[hidden],.welcome-page[hidden]{display:none!important}
+.welcome-page{min-height:calc(calc(100vh*var(--vk)) - 80px);display:flex;align-items:center;padding:42px 20px;background:radial-gradient(circle at 50% 42%,rgba(201,165,245,.22),transparent 36%),var(--canvas)}.welcome-shell{width:min(540px,100%);margin:auto}.welcome-page .setup-card{max-width:none;margin:0}.welcome-page .controls{grid-template-columns:1fr}.primary-button{width:100%;height:46px;margin-top:18px;border:1px solid var(--navy);border-radius:8px;color:#fff;background:var(--navy);font-size:13px;font-weight:750;cursor:pointer}.primary-button:hover{background:var(--navy-soft)}.form-error{min-height:17px;margin-top:9px;color:var(--red);font-size:11px}.format-warning{margin-top:12px;padding:10px 12px;color:#7b4a00;background:#fff8e8;border:1px solid #f0d28b;border-radius:7px;font-size:11px;line-height:1.45}.workbook-preview{margin-top:16px;padding-top:16px;border-top:1px solid var(--line)}.preview-title{margin-bottom:9px;color:var(--ink);font-size:12px;font-weight:800}.preview-title small{display:block;margin-top:3px;color:var(--muted);font-size:10px;font-weight:500}.mini-table{overflow:hidden;border:1px solid var(--line);border-radius:6px}.mini-table>div{display:grid;grid-template-columns:1.4fr 1fr .8fr;padding:7px 10px;color:var(--muted);font-size:9px;border-bottom:1px solid #eef0f4}.mini-table>div:last-child{border:0}.mini-table .mini-head{color:var(--navy);background:#edf0f6;font-weight:800;letter-spacing:.04em}#previewRows{display:contents}.mini-table #previewRows>div{display:grid;grid-template-columns:1.4fr 1fr .8fr;padding:7px 10px;color:var(--muted);font-size:9px;border-bottom:1px solid #eef0f4}.dashboard-page{min-height:calc(calc(100vh*var(--vk)) - 80px)}.dashboard-page[hidden],.welcome-page[hidden]{display:none!important}
 .workbook-preview .mini-table{max-height:360px;overflow:auto}
 /* Fill the row: chart panel stretches to the height of Grade Boundaries, so no empty gap above the table */
 @media(min-width:851px){
@@ -47,20 +47,20 @@
 @media(max-width:600px){.student-tools{width:100%;justify-content:flex-start}.student-tools .search-box{flex:1 1 100%}}
 .drop-zone{min-height:120px!important;gap:2px}.xlsx-icon{width:44px;height:44px;margin-bottom:6px}.drop-zone strong{font-size:13px}.drop-zone #filePrompt{margin-top:0;font-size:11px}.ext-badge{margin-top:8px;padding:2px 8px;color:#1d6f42;background:#e6f4ea;border:1px solid #bfe0cb;border-radius:20px;font-style:normal;font-size:10px;font-weight:800;letter-spacing:.04em}
 .remembered-name{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:8px;padding:8px 10px;color:var(--muted);background:var(--sky-soft);border:1px solid #e4d4f8;border-radius:7px;font-size:11px}.remembered-name button{padding:5px 8px;color:var(--navy);background:#fff;border:1px solid #d8c3f0;border-radius:5px;font-size:10px;font-weight:700;cursor:pointer}.validation-summary{margin-top:12px;padding:12px;color:#215e4c;background:#ecfbf4;border:1px solid #bde9d7;border-radius:8px;font-size:11px;line-height:1.5}.validation-summary.warning{color:#7b4a00;background:#fff8e8;border-color:#f0d28b}.validation-summary strong{display:block;margin-bottom:2px}.validation-issues{max-height:130px;overflow:auto;margin:8px 0 0;padding-left:18px}.validation-issues li{margin:3px 0}.original-value{color:#8b8795;text-decoration:line-through}.cleaned-value{color:#1c8a66;font-weight:700}.change-note{color:#7b4a00;font-size:9px}.mini-table.validation-preview>div,.mini-table.validation-preview #previewRows>div{grid-template-columns:.45fr 1.15fr 1.15fr .95fr .95fr .7fr}
-@media(max-width:850px){.metrics{grid-template-columns:repeat(2,1fr)}.workspace{grid-template-columns:1fr}.students{grid-column:auto}.hist-wrap{height:clamp(250px,48vw,340px)}}@media(max-width:600px){.app-header{height:70px;padding:0 18px}.brand-logo-crop{width:170px;height:58px}.brand-logo-crop img{width:170px;height:170px;top:-53px}.brand span,.secure-note{display:none}.container{width:calc(100% - 28px);padding-top:22px}.setup-card{padding:20px}.controls,.course-strip{grid-template-columns:1fr}.course-name{padding:12px 0 0;border-left:0;border-top:1px solid rgba(255,255,255,.14)}.dashboard-intro,.student-toolbar{align-items:start;flex-direction:column}.search-box{width:100%}.grade-grid{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}.hist-wrap{height:230px;min-height:230px}}@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media(max-width:850px){.metrics{grid-template-columns:repeat(2,1fr)}.workspace{grid-template-columns:1fr}.students{grid-column:auto}.hist-wrap{height:clamp(250px,calc(48vw*var(--vk)),340px)}}@media(max-width:600px){.app-header{height:70px;padding:0 18px}.brand-logo-crop{width:170px;height:58px}.brand-logo-crop img{width:170px;height:170px;top:-53px}.brand span,.secure-note{display:none}.container{width:calc(100% - 28px);padding-top:22px}.setup-card{padding:20px}.controls,.course-strip{grid-template-columns:1fr}.course-name{padding:12px 0 0;border-left:0;border-top:1px solid rgba(255,255,255,.14)}.dashboard-intro,.student-toolbar{align-items:start;flex-direction:column}.search-box{width:100%}.grade-grid{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}.hist-wrap{height:230px;min-height:230px}}@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 /* ===== Responsive pass: every block reflows or scales with the window ===== */
 .field-hint{display:block;margin-top:6px;color:var(--muted);font-size:11px}
 .brand{min-width:0;flex:0 1 auto}
-.brand-logo-crop{--w:clamp(130px,30vw,202px);width:var(--w);height:calc(var(--w)*.3168)}
+.brand-logo-crop{--w:clamp(130px,calc(30vw*var(--vk)),202px);width:var(--w);height:calc(var(--w)*.3168)}
 .brand-logo-crop img{width:var(--w);height:var(--w);top:calc(var(--w)*-.3119)}
-.section-heading h1{font-size:clamp(20px,2.6vw,24px)}
-.dashboard-intro h2{font-size:clamp(20px,2.4vw,25px)}
-.metric-card b{font-size:clamp(22px,2.3vw,28px)}
+.section-heading h1{font-size:clamp(20px,calc(2.6vw*var(--vk)),24px)}
+.dashboard-intro h2{font-size:clamp(20px,calc(2.4vw*var(--vk)),25px)}
+.metric-card b{font-size:clamp(22px,calc(2.3vw*var(--vk)),28px)}
 .course-strip{grid-template-columns:minmax(170px,220px) minmax(0,1fr) auto}
 .course-name{min-width:0}
 .strip-right{min-width:0}
-.timer-clock{width:clamp(72px,8vw,90px);height:clamp(72px,8vw,90px)}.timer-clock svg{width:100%;height:100%}
-.report-btn{min-width:0;height:auto;min-height:38px;padding:8px clamp(10px,1.3vw,16px);font-size:clamp(11px,.5vw + 7px,12.5px);line-height:1.2;white-space:normal;text-align:left}
+.timer-clock{width:clamp(72px,calc(8vw*var(--vk)),90px);height:clamp(72px,calc(8vw*var(--vk)),90px)}.timer-clock svg{width:100%;height:100%}
+.report-btn{min-width:0;height:auto;min-height:38px;padding:8px clamp(10px,calc(1.3vw*var(--vk)),16px);font-size:clamp(11px,calc(.5vw*var(--vk)) + 7px,12.5px);line-height:1.2;white-space:normal;text-align:left}
 @media(max-width:960px){
   .course-strip{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px 20px}
   .course-strip .strip-right{grid-column:1/-1;justify-content:space-between;gap:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,.14)}
@@ -71,7 +71,7 @@
   .course-strip{grid-template-columns:minmax(0,1fr)}
   .course-strip .strip-right{flex-wrap:nowrap}
   .course-name{border-left:0}
-  .prof-badge{max-width:min(130px,34vw)}
+  .prof-badge{max-width:min(130px,calc(34vw*var(--vk)))}
   .metric-card{padding:12px 14px}
 }
 @media(max-width:420px){
@@ -79,16 +79,16 @@
   .filter-select,.filter-btn{flex:1 1 auto}
 }
 /* ===== Fluid scaling pass: every size follows the viewport (with readable floors) ===== */
-:root{--u:clamp(.78px,.3px + .0486vw,1.15px);--t1:max(10px,calc(var(--u)*10.5));--t2:max(11px,calc(var(--u)*12));--t3:max(12px,calc(var(--u)*13.5));--t4:max(16px,calc(var(--u)*18));--t5:max(20px,calc(var(--u)*25));--t6:max(22px,calc(var(--u)*28));--ctl:max(36px,calc(var(--u)*44));--r:max(6px,calc(var(--u)*10))}
+:root{--u:clamp(.78px,.3px + calc(.0486vw*var(--vk)),1.15px);--t1:max(10px,calc(var(--u)*10.5));--t2:max(11px,calc(var(--u)*12));--t3:max(12px,calc(var(--u)*13.5));--t4:max(16px,calc(var(--u)*18));--t5:max(20px,calc(var(--u)*25));--t6:max(22px,calc(var(--u)*28));--ctl:max(36px,calc(var(--u)*44));--r:max(6px,calc(var(--u)*10))}
 html{-webkit-text-size-adjust:100%}
 /* Header */
-.app-header{height:max(62px,calc(var(--u)*80));padding:0 clamp(16px,5vw,76px)}
-.brand-logo-crop{--w:clamp(96px,min(calc(var(--u)*202),34vw),240px)}
+.app-header{height:max(62px,calc(var(--u)*80));padding:0 clamp(16px,calc(5vw*var(--vk)),76px)}
+.brand-logo-crop{--w:clamp(96px,min(calc(var(--u)*202),calc(34vw*var(--vk))),240px)}
 .header-title{font-size:max(13px,calc(var(--u)*20));letter-spacing:.12em}
 .prof-badge{max-width:max(110px,calc(var(--u)*210))}.prof-label{font-size:var(--t1)}.prof-name{font-size:var(--t3)}.prof-name svg{width:max(11px,calc(var(--u)*12));height:max(11px,calc(var(--u)*12))}.prof-edit{width:max(120px,calc(var(--u)*190));height:max(26px,calc(var(--u)*28));font-size:var(--t3)}
 /* Page containers */
-.container{width:min(calc(var(--u)*1360),calc(100% - clamp(24px,4.4vw,64px)));padding:calc(var(--u)*36) 0 calc(var(--u)*48)}
-.welcome-page{min-height:calc(100vh - max(62px,calc(var(--u)*80)));padding:calc(var(--u)*42) clamp(12px,1.4vw,20px)}
+.container{width:min(calc(var(--u)*1360),calc(100% - clamp(24px,calc(4.4vw*var(--vk)),64px)));padding:calc(var(--u)*36) 0 calc(var(--u)*48)}
+.welcome-page{min-height:calc(calc(100vh*var(--vk)) - max(62px,calc(var(--u)*80)));padding:calc(var(--u)*42) clamp(12px,calc(1.4vw*var(--vk)),20px)}
 .welcome-shell{width:min(calc(var(--u)*540),100%)}
 .setup-card{padding:max(16px,calc(var(--u)*28));border-radius:max(12px,calc(var(--u)*18))}
 .section-heading{padding-bottom:calc(var(--u)*18);margin-bottom:calc(var(--u)*20)}
@@ -117,7 +117,7 @@ html{-webkit-text-size-adjust:100%}
 /* Download Grade Report button: size, type, icon and padding all scale with the window */
 .report-btn{gap:max(6px,calc(var(--u)*8));min-height:max(36px,calc(var(--u)*42));padding:max(8px,calc(var(--u)*10)) max(12px,calc(var(--u)*18));font-size:max(10.5px,calc(var(--u)*13));border-radius:max(6px,calc(var(--u)*9))}
 .report-btn svg{width:max(13px,calc(var(--u)*17));height:max(13px,calc(var(--u)*17))}
-@media(max-width:960px){.report-btn{max-width:min(100%,max(200px,34vw))}}
+@media(max-width:960px){.report-btn{max-width:min(100%,max(200px,calc(34vw*var(--vk))))}}
 /* Metrics */
 .metrics{gap:max(8px,calc(var(--u)*12));margin-bottom:max(12px,calc(var(--u)*18))}
 .metric-card{padding:max(12px,calc(var(--u)*16)) max(12px,calc(var(--u)*18));border-radius:max(8px,calc(var(--u)*10))}
@@ -166,7 +166,7 @@ html{-webkit-text-size-adjust:100%}
 .workbook-preview .mini-table{max-height:none;overflow:visible;border:0;border-radius:0}
 .workbook-preview .mini-head{position:sticky;top:0;z-index:2}
 .preview-frame{position:relative;background:#fff;border:1px solid var(--line);border-radius:6px;overflow:hidden}
-.preview-scroll{overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;transition:max-height .3s ease;scrollbar-width:thin;scrollbar-color:#d9c7f1 transparent}
+.preview-scroll{position:relative;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;transition:max-height .3s ease;scrollbar-width:thin;scrollbar-color:#d9c7f1 transparent}
 .preview-frame.is-collapsed .preview-scroll{overflow:hidden}
 .preview-fade{position:absolute;left:0;right:0;bottom:0;height:64%;cursor:pointer;background:linear-gradient(to bottom,rgba(255,255,255,0) 0%,rgba(255,255,255,.78) 58%,#fff 100%);transition:opacity .25s}
 .preview-frame.is-expanded .preview-fade{opacity:0;pointer-events:none}
@@ -185,7 +185,7 @@ html{-webkit-text-size-adjust:100%}
 body{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 .section-heading h1,.dashboard-intro h2,.panel-heading h3,.student-toolbar h3,.preview-title,.metric-card b{font-weight:700;letter-spacing:-.012em}
 .header-title{font-weight:600;letter-spacing:.09em}
-.section-heading p,.dashboard-intro p{font-style:italic;color:#4a4675}
+.section-heading p{font-style:italic;color:#4a4675}.dashboard-intro p{font-style:normal;color:#4a4675}
 .student-table td,.mini-table #previewRows>div,.metric-card b,.stat b,.timer-text{font-variant-numeric:tabular-nums}
 .course-name strong{font-family:var(--font);font-weight:700}
 
@@ -223,6 +223,113 @@ body{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
   .seg button{min-height:36px}
   .prof-name,#profName{min-height:36px}
 }
+
+/* ===== Visual refinement: banner gradient + dashboard cards =====
+   Gradient end-stop is taken from the BITS Pilani logo navy (#2B2966), lightened slightly so purple stays dominant. */
+:root{
+  --grad-start:#7809E8;--grad-mid:#700BD9;--grad-end:#312A8A;
+  --brand-gradient:linear-gradient(105deg,var(--grad-start) 0%,var(--grad-mid) 45%,var(--grad-end) 100%);
+  --on-brand-label:#e6d9fb;
+  --card-r:max(10px,calc(var(--u)*12));
+  --card-border:#e6dcf5;
+  --card-shadow:0 1px 2px rgba(49,42,138,.05),0 6px 18px rgba(49,42,138,.06);
+  --gap:max(12px,calc(var(--u)*16));
+}
+
+/* Course banner */
+.course-strip{
+  background:var(--brand-gradient);
+  padding:max(14px,calc(var(--u)*16)) max(16px,calc(var(--u)*20));
+  margin-bottom:var(--gap);
+  border-radius:var(--card-r);
+  box-shadow:0 4px 14px rgba(49,42,138,.16);
+}
+.course-strip label,.course-name small,.course-timer small{color:var(--on-brand-label)}
+.course-name span{color:#ebe1fb}
+.course-name,.course-timer{border-left-color:rgba(255,255,255,.2)}
+.course-strip .strip-right{border-top-color:rgba(255,255,255,.2)}
+.course-strip select{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.32)}
+.course-strip select:focus-visible,.report-btn:focus-visible{outline:2px solid #fff;outline-offset:2px}
+#timerArc{stroke:#dcc8fb}
+.timer-clock circle:first-child{stroke:rgba(255,255,255,.26)}
+.report-btn{box-shadow:0 2px 8px rgba(20,12,70,.2)}
+.report-btn:disabled{opacity:.62}
+
+/* Statistic cards */
+.metrics{gap:var(--gap);margin-bottom:var(--gap)}
+.workspace{gap:var(--gap)}
+.metric-card{
+  display:flex;flex-direction:column;justify-content:center;min-height:0;
+  padding:max(13px,calc(var(--u)*17)) max(14px,calc(var(--u)*20));
+  background:#fff;border:1px solid var(--card-border);border-radius:var(--card-r);
+  box-shadow:var(--card-shadow);
+}
+.metric-card span{color:var(--muted);font-size:var(--t2);font-weight:700;letter-spacing:.03em;line-height:1.3}
+.metric-card b{margin:calc(var(--u)*6) 0 0;color:var(--ink);font-size:var(--t6);font-weight:700;letter-spacing:-.01em;line-height:1.15}
+.metric-card.accent{
+  background:var(--brand-gradient);background-origin:border-box;border-color:transparent;
+  box-shadow:0 4px 14px rgba(49,42,138,.18);
+}
+.metric-card.accent span,.metric-card.accent small{color:var(--on-brand-label)}
+.metric-card.accent b{color:#fff}
+.panel{border-color:var(--card-border);border-radius:var(--card-r);box-shadow:var(--card-shadow)}
+
+/* Logo acts as a "home" button once the grading screen is open */
+body:has(#dashboardScreen:not([hidden])) .brand-logo-crop{cursor:pointer}
+.brand-logo-crop:focus-visible{outline:2px solid var(--navy);outline-offset:3px;border-radius:6px}
+
+/* ===== Desktop sizing: render at 90% on large screens (same look as browser zoom 90%) =====
+   --vk cancels the zoom for vw/vh units so viewport-based sizes match a real 90% browser zoom. */
+:root{--vk:1}
+@media(min-width:1101px){:root{--vk:1.1111}html{zoom:.9}}
+
+/* ===== Import Preview: issue navigator ===== */
+.issue-nav{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:0 0 10px;padding:8px 10px;color:#7b4a00;background:#fff8e8;border:1px solid #f0d28b;border-radius:8px;font-size:var(--t2)}
+.issue-nav[hidden]{display:none}
+.issue-nav-info{display:flex;align-items:center;gap:8px;min-width:0;font-weight:700}
+.issue-nav-info svg{flex:none;width:16px;height:16px}
+.issue-nav-controls{display:flex;align-items:center;gap:6px;flex:1 1 260px;justify-content:flex-end;min-width:0}
+.issue-nav select{flex:1 1 auto;min-width:0;max-width:340px;height:32px;padding:0 8px;color:var(--ink);background:#fff;border:1px solid #f0d28b;border-radius:7px;font:inherit;font-size:var(--t2);text-overflow:ellipsis}
+.issue-nav button{flex:none;width:32px;height:32px;display:grid;place-items:center;padding:0;color:#7b4a00;background:#fff;border:1px solid #f0d28b;border-radius:7px;cursor:pointer}
+.issue-nav button:hover{background:#fff1cf}
+.issue-nav button svg{width:14px;height:14px}
+.issue-nav button:focus-visible,.issue-nav select:focus-visible,.pg-btn:focus-visible{outline:2px solid var(--navy);outline-offset:2px}
+.mini-table #previewRows>div.row-current{outline:2px solid var(--navy);outline-offset:-2px;background-image:linear-gradient(rgba(128,16,232,.09),rgba(128,16,232,.09))}
+
+/* ===== Drag & drop highlight ===== */
+.drop-zone.is-dragover{border-style:solid;border-color:var(--navy);background:var(--sky-soft);box-shadow:0 0 0 3px rgba(128,16,232,.12)}
+
+/* ===== Grade report preview: pagination ===== */
+.table-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:12px}
+.table-bar .table-footer{margin-top:0}
+.pager{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.pager[hidden]{display:none}
+.pg-btn{min-width:30px;height:30px;padding:0 8px;color:var(--navy);background:#fff;border:1px solid #d8c3f0;border-radius:7px;font:inherit;font-size:var(--t2);font-weight:700;cursor:pointer;transition:background .15s}
+.pg-btn:hover:not(:disabled):not(.on){background:var(--sky-soft)}
+.pg-btn.on{color:#fff;background:var(--navy);border-color:var(--navy);cursor:default}
+.pg-btn:disabled{opacity:.4;cursor:not-allowed}
+.pg-gap{min-width:18px;text-align:center;color:var(--muted);font-size:var(--t2)}
+@media(max-width:600px){.table-bar{justify-content:center}.issue-nav-controls{flex-basis:100%}.issue-nav select{max-width:none}}
+
+/* ===== Grading screen banner: smoother gradient (same brand colours) + bold white key text ===== */
+.course-strip{
+  background:
+    radial-gradient(120% 160% at 0% 0%,rgba(255,255,255,.07) 0%,rgba(255,255,255,0) 55%),
+    linear-gradient(105deg,#7809E8 0%,#7809E7 10%,#7609E4 20%,#740AE0 30%,#710BDC 40%,#6E0CD6 50%,#670FCC 60%,#5D14C0 70%,#501AB0 80%,#41229E 90%,#312A8A 100%);
+}
+.course-strip label,.course-name small,.course-timer small{color:#fff;font-weight:800;text-shadow:0 1px 2px rgba(20,12,70,.28)}
+.course-name strong{color:#fff;font-weight:800;text-shadow:0 1px 2px rgba(20,12,70,.28)}
+.course-name span{color:#fff;font-weight:500}
+.course-strip select{color:#fff;font-weight:700;background-color:rgba(255,255,255,.14);border-color:rgba(255,255,255,.55)}
+.course-strip select:hover{background-color:rgba(255,255,255,.2)}
+.course-strip select option{color:var(--ink);font-weight:500}
+
+/* Banner: "LABEL: value" on one line for Course Selected / File Uploaded */
+.course-name{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:8px;row-gap:8px;align-items:baseline;align-content:center}
+.course-name small,.course-name strong,.course-name span{display:block;margin:0;min-width:0}
+.course-name small{white-space:nowrap}
+.course-name small::after{content:":"}
+.course-name strong,.course-name span{overflow-wrap:anywhere}
 </style>
 </head>
 
@@ -248,14 +355,14 @@ body{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
       </div>
       <div id="formatWarning" class="format-warning" hidden aria-live="polite"></div>
       <div id="validationSummary" class="validation-summary" hidden aria-live="polite"></div>
-      <div id="workbookPreview" class="workbook-preview" hidden><div class="preview-title">Import Preview <small id="previewDescription"></small></div><div id="previewFrame" class="preview-frame is-collapsed"><div id="previewScroll" class="preview-scroll"><div class="mini-table validation-preview"><div class="mini-head"><span>ROW</span><span>BITS ID</span><span>COURSE</span><span>ORIGINAL MARK</span><span>CLEANED MARK</span><span>STATUS</span></div><div id="previewRows"></div></div></div><div id="previewFade" class="preview-fade" aria-hidden="true"></div></div><button type="button" id="previewToggle" class="preview-toggle" aria-expanded="false" aria-controls="previewScroll" hidden><span class="pt-label">Expand preview</span><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5L6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+      <div id="workbookPreview" class="workbook-preview" hidden><div class="preview-title">Import Preview <small id="previewDescription"></small></div><div id="issueNav" class="issue-nav" hidden><div class="issue-nav-info"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5L1.6 20.5h20.8z" fill="#e0a800" stroke="#e0a800" stroke-width="1.6" stroke-linejoin="round"/><path d="M12 9.5v5" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><circle cx="12" cy="17.6" r="1.4" fill="#fff"/></svg><span id="issueCounter" aria-live="polite"></span></div><div class="issue-nav-controls"><select id="issueJump" aria-label="Jump to a row with an issue"></select><button type="button" id="issuePrev" aria-label="Previous issue" title="Previous issue"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 7.5L6 4l3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button type="button" id="issueNext" aria-label="Next issue" title="Next issue"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5L6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></div><div id="previewFrame" class="preview-frame is-collapsed"><div id="previewScroll" class="preview-scroll"><div class="mini-table validation-preview"><div class="mini-head"><span>ROW</span><span>BITS ID</span><span>COURSE</span><span>ORIGINAL MARK</span><span>CLEANED MARK</span><span>STATUS</span></div><div id="previewRows"></div></div></div><div id="previewFade" class="preview-fade" aria-hidden="true"></div></div><button type="button" id="previewToggle" class="preview-toggle" aria-expanded="false" aria-controls="previewScroll" hidden><span class="pt-label">Expand preview</span><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5L6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
       <div id="setupError" class="form-error" aria-live="polite"></div>
       <button id="continueToGrading" class="primary-button" type="button">Convert to Grades &#8594;</button>
     </section></div>
   </section>
 
   <section id="dashboardScreen" class="dashboard-page" hidden><div class="container">
-  <section class="dashboard-intro"><div><h2>Grade Review</h2><p>You can edit default grade boundaries, and once you are done, you can download the graded file in a CSV format.</p></div></section>
+  <section class="dashboard-intro"><div><h2>Grade Review</h2><p>Please select a course to begin grading. You can adjust grade boundaries, and once you are done, you can download the grade report file in CSV format.</p></div></section>
   <section class="course-strip"><div><label for="course">SELECT A COURSE</label><select id="course"><option value="">Select a course to begin</option></select></div><div class="course-name"><small>COURSE SELECTED</small><strong id="courseTitle">No course selected</strong><small>FILE UPLOADED</small><span id="sourceFile">No file uploaded</span></div><div class="strip-right"><div class="course-timer"><small>GRADING TIME</small><div class="timer-wrapper"><div class="timer-clock"><svg width="90" height="90" viewBox="0 0 90 90"><circle cx="45" cy="45" r="40" stroke="rgba(255,255,255,.2)" stroke-width="6" fill="none"/><circle id="timerArc" cx="45" cy="45" r="40" stroke="#c9a5f5" stroke-width="6" fill="none" stroke-linecap="round" stroke-dasharray="251" stroke-dashoffset="251"/></svg><div class="timer-text" id="timerText">00:00</div></div></div></div><button id="downloadTop" class="report-btn" type="button" disabled title="Select a course and set valid grade ranges first"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11m0 0l-4.5-4.5M12 15l4.5-4.5"/><path d="M5 20h14"/></svg>Download Grade Report</button></div></section>
 
   <section class="metrics" aria-label="Course statistics">
@@ -268,7 +375,7 @@ body{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
   <div class="workspace">
     <section class="panel"><div class="panel-heading"><div><h3 id="chartTitle">Marks Distribution</h3><p id="chartSub">Shows distribution of marks as a histogram.</p></div><div class="seg" role="group" aria-label="Chart type"><button id="modeMarks" class="on" type="button" aria-pressed="true">Marks</button><button id="modeGrades" type="button" aria-pressed="false">Grades</button></div></div><div class="hist-scroll"><div class="hist-wrap"><canvas id="hist" width="380" height="240"></canvas></div></div><p class="hist-hint">Swipe sideways to see all mark ranges</p><div class="stats"><div class="stat">MIN<b id="min"></b></div><div class="stat">MAX<b id="max"></b></div><div class="stat">AVERAGE<b id="avg"></b></div><div class="stat">MEDIAN<b id="med"></b></div></div><div class="grade-summary" id="gradeSummary"></div></section>
     <section class="panel"><div class="panel-heading"><div><h3>Grade Boundaries</h3><p>These are set at default. You can adjust continuous score ranges as per your grading requirement.</p></div></div><div class="grade-grid" id="grades"></div><div class="error" id="rangeError" aria-live="polite"></div><div class="actions"><button class="secondary" id="resetRanges">Reset Ranges</button><button id="download" disabled>Finalize &amp; Download</button></div><div id="thankyou" class="notice" aria-live="polite"></div></section>
-    <section class="panel students"><div class="student-toolbar"><div><h3>Preview Grade Report</h3><p>Review individual scores and automatically assigned grades.</p></div><div class="student-tools"><select id="gradeFilter" class="filter-select" aria-label="Filter by grade"><option value="">All grades</option></select><button id="filterTop5" class="filter-btn" type="button" aria-pressed="false">Top 5</button><button id="filterBottom5" class="filter-btn" type="button" aria-pressed="false">Bottom 5</button><label class="search-box">&#128269;<input id="studentSearch" aria-label="Search students" placeholder="Search by BITS ID"></label></div></div><div class="student-table-wrap"><table class="student-table"><thead><tr><th>BITS ID</th><th>COURSE</th><th>TOTAL MARKS</th><th>GRADE</th></tr></thead><tbody id="studentRows"></tbody></table><div id="emptyStudents" class="empty-state">Choose a course to view student marks.</div></div><div id="tableFooter" class="table-footer"></div></section>
+    <section class="panel students"><div class="student-toolbar"><div><h3>Preview Grade Report</h3><p>Review individual scores and automatically assigned grades.</p></div><div class="student-tools"><select id="gradeFilter" class="filter-select" aria-label="Filter by grade"><option value="">All grades</option></select><button id="filterTop5" class="filter-btn" type="button" aria-pressed="false">Top 5</button><button id="filterBottom5" class="filter-btn" type="button" aria-pressed="false">Bottom 5</button><label class="search-box">&#128269;<input id="studentSearch" aria-label="Search students" placeholder="Search by BITS ID"></label></div></div><div class="student-table-wrap"><table class="student-table"><thead><tr><th>BITS ID</th><th>COURSE</th><th>TOTAL MARKS</th><th>GRADE</th></tr></thead><tbody id="studentRows"></tbody></table><div id="emptyStudents" class="empty-state">Choose a course to view student marks.</div></div><div class="table-bar"><div id="tableFooter" class="table-footer"></div><nav id="studentPager" class="pager" aria-label="Student report pages" hidden></nav></div></section>
   </div>
   <footer class="page-footer">Birla Institute of Technology &amp; Science, Pilani</footer>
   </div></section>
@@ -279,6 +386,7 @@ body{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 let gradingStartTime = null;
 let timerInterval=null;
 const circumference = 2 * Math.PI * 40;
+(function(){const ring=document.getElementById("timerArc");ring.setAttribute("stroke-dasharray",circumference);ring.setAttribute("stroke-dashoffset",circumference);})();
 
 function startTimer(){
   const arc=document.getElementById("timerArc");
@@ -328,13 +436,25 @@ let histogramFrame = null;
 let validationReport = null;
 let chartMode = "marks";
 let filterMode = "";
+let issueRows = [];
+let issueIdx = -1;
+let studentPage = 1;
+const PAGE_SIZE = 5;
 const professorStorageKey="bits-grading-console-last-professor";
 
 try{ instructor.value=localStorage.getItem(professorStorageKey)||""; }catch(e){}
 
-file.onchange=e=>{
-  const selectedFile=e.target.files[0];
+const EXCEL_EXT=/\.xlsx$/i;
+const NOT_EXCEL_TITLE="Only Excel files (.xlsx) can be uploaded. Please choose a different file.";
+file.onchange=e=>handleFile(e.target.files[0],false);
+
+function handleFile(selectedFile,fromDrop){
   if(!selectedFile) return;
+  /* Only Excel workbooks are accepted (browse and drag & drop share this check). */
+  if(!EXCEL_EXT.test(selectedFile.name)){
+    rejectFile("Unsupported file type: "+selectedFile.name,NOT_EXCEL_TITLE);
+    return;
+  }
   const currentUpload=++uploadSequence;
   resetGradingSession();
   uploadedFileName=selectedFile.name;
@@ -346,10 +466,16 @@ file.onchange=e=>{
   sourceFile.textContent=uploadedFileName;
   setupError.textContent="";
   formatWarning.hidden=true;
+  if(fromDrop){
+    /* keep the hidden input in sync so the rest of the flow sees the file */
+    try{ const dt=new DataTransfer(); dt.items.add(selectedFile); file.files=dt.files; }catch(_){}
+  }
   const r=new FileReader();
   r.onload=ev=>{
     if(currentUpload!==uploadSequence) return;
     try{
+      /* A real .xlsx is a ZIP archive ("PK\x03\x04"). This rejects text/CSV files that were simply renamed. */
+      if(String(ev.target.result).slice(0,4)!=="PK\u0003\u0004"){ const err=new Error("File contents are not an Excel workbook."); err.notExcel=true; throw err; }
       const wb=XLSX.read(ev.target.result,{type:"binary",cellText:true});
       if(!wb.SheetNames.length) throw new Error("The workbook has no worksheets.");
       const uploadedRows=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]],{header:1,raw:false,defval:null,blankrows:true});
@@ -362,7 +488,7 @@ file.onchange=e=>{
       renderValidationSummary();
       workbookIsValid=true;
     }catch(error){
-      rejectFile(error.message || "The workbook could not be read. Please upload a valid .xlsx file.");
+      rejectFile(error.message || "The workbook could not be read. Please upload a valid .xlsx file.",error.notExcel?NOT_EXCEL_TITLE:undefined);
     }
   };
   r.onerror=()=>{
@@ -370,16 +496,43 @@ file.onchange=e=>{
     rejectFile("The workbook could not be read. Please upload the file again.");
   };
   r.readAsBinaryString(selectedFile);
-};
+}
 
-function rejectFile(message){
+/* ----- Drag & drop ----- */
+let dragDepth=0;
+const dragHasFiles=e=>!!e.dataTransfer&&Array.from(e.dataTransfer.types||[]).includes("Files");
+["dragenter","dragover"].forEach(type=>dropZone.addEventListener(type,e=>{
+  if(!dragHasFiles(e)) return;
+  e.preventDefault();
+  if(type==="dragenter") dragDepth++;
+  e.dataTransfer.dropEffect="copy";
+  dropZone.classList.add("is-dragover");
+}));
+dropZone.addEventListener("dragleave",()=>{
+  dragDepth=Math.max(0,dragDepth-1);
+  if(!dragDepth) dropZone.classList.remove("is-dragover");
+});
+dropZone.addEventListener("drop",e=>{
+  e.preventDefault();
+  dragDepth=0;
+  dropZone.classList.remove("is-dragover");
+  const files=e.dataTransfer?e.dataTransfer.files:[];
+  if(!files.length) return;
+  if(files.length>1){ rejectFile("Multiple files were dropped.","Please upload one Excel file (.xlsx) at a time."); return; }
+  handleFile(files[0],true);
+});
+/* Stop the browser from opening a file that is dropped outside the drop zone. */
+window.addEventListener("dragover",e=>{ if(!dragHasFiles(e)) return; e.preventDefault(); if(!dropZone.contains(e.target)) e.dataTransfer.dropEffect="none"; });
+window.addEventListener("drop",e=>{ if(dragHasFiles(e)) e.preventDefault(); });
+
+function rejectFile(message,title){
   clearSelectedFile();
   dropZone.classList.add("has-error");
   filePrompt.textContent="File not accepted";
   formatWarning.className="format-warning error";
   formatWarning.innerHTML="";
   formatWarning.title=message;
-  formatWarning.appendChild(bannerRow(ICON_ERR,"Excel file does not follow the required format. Please review and upload again.",""));
+  formatWarning.appendChild(bannerRow(ICON_ERR,title||"Excel file does not follow the required format. Please review and upload again.",""));
   formatWarning.hidden=false;
 }
 
@@ -397,7 +550,7 @@ function resetGradingSession(){
   studentRows.innerHTML="";
   emptyStudents.style.display="block";
   emptyStudents.textContent="Choose a course to view student marks.";
-  tableFooter.textContent="";
+  tableFooter.textContent=""; studentPager.hidden=true; studentPager.innerHTML="";
   filterMode=""; if(typeof syncFilterUI==="function") syncFilterUI();
   [min,max,avg,med,studentCount,minMetric,maxMetric,avgMetric].forEach(item=>item.textContent="—");
   courseTitle.textContent="No course selected";
@@ -410,6 +563,7 @@ function resetGradingSession(){
   emptyChart.ctx.clearRect(0,0,emptyChart.width,emptyChart.height);
   workbookPreview.hidden=true;
   previewRows.innerHTML="";
+  issueNav.hidden=true; issueRows=[]; issueIdx=-1; studentPage=1;
   validationSummary.hidden=true;
   validationSummary.innerHTML="";
   validationReport=null;
@@ -522,6 +676,7 @@ function renderWorkbookPreview(){
   const frag=document.createDocumentFragment();
   validationReport.records.forEach(record=>{
     const row=document.createElement("div");
+    row.dataset.row=record.rowNumber;
     const hasMissing=record.missingFields.length>0;
     if(hasMissing) row.className="row-missing"; else if(record.issues.length) row.className="row-invalid";
     const status=hasMissing ? MISSING_ROW_MESSAGE : record.issues.length ? "Review required" : record.changes.length ? "Cleaned" : "Validated";
@@ -544,7 +699,48 @@ function renderWorkbookPreview(){
   previewRows.appendChild(frag);
   previewScroll.scrollTop=0;
   setPreviewExpanded(false);
+  setupIssueNav();
 }
+
+/* Issue navigator: step through / jump to rows that have problems, however far down they are. */
+function setupIssueNav(){
+  const issues=validationReport.issues;
+  issueRows=issues.map(it=>previewRows.querySelector(`[data-row="${it.rowNumber}"]`)).filter(Boolean);
+  issueIdx=-1;
+  issueJump.innerHTML="";
+  issueNav.hidden=!issueRows.length;
+  if(!issueRows.length) return;
+  const n=issueRows.length;
+  issueCounter.textContent=`${n} row${n===1?"":"s"} with issues`;
+  issueJump.add(new Option("Jump to an issue…",""));
+  issues.forEach((it,i)=>issueJump.add(new Option(`Row ${it.rowNumber} — ${it.reason}`,String(i))));
+  const single=n===1;
+  issuePrev.disabled=issueNext.disabled=false;
+  issuePrev.title=single?"Go to the issue":"Previous issue";
+  issueNext.title=single?"Go to the issue":"Next issue";
+}
+function goToIssue(i){
+  const n=issueRows.length; if(!n) return;
+  if(issueRows[issueIdx]) issueRows[issueIdx].classList.remove("row-current");
+  issueIdx=((i%n)+n)%n;
+  const row=issueRows[issueIdx];
+  row.classList.add("row-current");
+  issueJump.value=String(issueIdx);
+  issueCounter.textContent=`Issue ${issueIdx+1} of ${n} · Row ${row.dataset.row}`;
+  if(!previewExpanded) setPreviewExpanded(true);
+  requestAnimationFrame(()=>{
+    const sc=previewScroll, headH=sc.querySelector(".mini-head").offsetHeight;
+    /* offsetTop shares scrollTop's units (the page runs at CSS zoom .9 on desktop, which skews getBoundingClientRect) */
+    const y=row.offsetTop;
+    const target=Math.max(0,y-headH-row.offsetHeight);
+    /* short hops glide; long jumps (e.g. row 500) land instantly so the scroll can't be cut short */
+    sc.scrollTo({top:target,behavior:Math.abs(target-sc.scrollTop)<400?"smooth":"auto"});
+    previewFrame.scrollIntoView({block:"nearest",behavior:"smooth"});
+  });
+}
+issueNext.onclick=()=>goToIssue(issueIdx+1);
+issuePrev.onclick=()=>goToIssue(issueIdx<0?issueRows.length-1:issueIdx-1);
+issueJump.onchange=()=>{ if(issueJump.value!=="") goToIssue(+issueJump.value); };
 
 /* Import Preview: a faded 3-4 row teaser that expands to a 10-row window; further rows scroll. */
 let previewExpanded=false;
@@ -620,7 +816,7 @@ continueToGrading.onclick=()=>{
     setupError.textContent="Please enter your name to continue.";
     return;
   }
-  if(!file.files.length || !workbookIsValid){
+  if(!uploadedFileName || !workbookIsValid){
     setupError.textContent="Please upload a workbook with identifiable BITS ID, Course, and Total Marks columns.";
     return;
   }
@@ -639,6 +835,7 @@ continueToGrading.onclick=()=>{
 };
 
 course.onchange=()=>{
+  studentPage=1;
   resetTimer();
   if(!instructor.value.trim()){
     alert("Please enter instructor name first");
@@ -761,9 +958,11 @@ const CHART_FONT='"Source Sans 3","Myriad Pro","Segoe UI",Carlito,Arial,sans-ser
 document.fonts&&document.fonts.ready.then(()=>{ if(typeof course!=="undefined"&&course.value&&!dashboardScreen.hidden) drawHistogram(); });
 function sizeHistogramCanvas(){
   const bounds=hist.getBoundingClientRect();
-  const width=Math.max(1,Math.round(bounds.width));
-  const height=Math.max(1,Math.round(bounds.height));
-  const ratio=Math.min(window.devicePixelRatio||1,2);
+  /* On large screens the page is rendered at 90% (CSS zoom); draw the chart in un-zoomed units so it scales with the rest of the UI */
+  const zoom=parseFloat(getComputedStyle(document.documentElement).zoom)||1;
+  const width=zoom===1?Math.max(1,Math.round(bounds.width)):Math.max(1,hist.offsetWidth);
+  const height=zoom===1?Math.max(1,Math.round(bounds.height)):Math.max(1,hist.offsetHeight);
+  const ratio=Math.min(window.devicePixelRatio||1,2)*zoom;
   const targetWidth=Math.round(width*ratio);
   const targetHeight=Math.round(height*ratio);
   if(hist.width!==targetWidth||hist.height!==targetHeight){
@@ -964,7 +1163,7 @@ function renderStudentTable(){
     studentRows.innerHTML="";
     emptyStudents.style.display="block";
     emptyStudents.textContent="Choose a course to view student marks.";
-    tableFooter.textContent="";
+    tableFooter.textContent=""; studentPager.hidden=true; studentPager.innerHTML="";
     return;
   }
   const query=studentSearch.value.trim().toLowerCase();
@@ -982,8 +1181,12 @@ function renderStudentTable(){
     filterLabel="grade "+gradeFilter.value;
   }
   const students=pool.filter(d=>String(d["BITS ID"]).toLowerCase().includes(query));
+  const pages=Math.max(1,Math.ceil(students.length/PAGE_SIZE));
+  studentPage=Math.min(Math.max(1,studentPage),pages);
+  const start=(studentPage-1)*PAGE_SIZE;
+  const pageStudents=students.slice(start,start+PAGE_SIZE);
   studentRows.innerHTML="";
-  students.forEach(d=>{
+  pageStudents.forEach(d=>{
     const row=document.createElement("tr");
     const grade=gradeForMark(d["Total Marks"]);
     const idCell=document.createElement("td");
@@ -1006,10 +1209,52 @@ function renderStudentTable(){
   });
   emptyStudents.style.display=students.length ? "none" : "block";
   emptyStudents.textContent=query ? "No students match that BITS ID." : (filterLabel ? `No students in ${filterLabel}.` : "No students are available for this course.");
-  tableFooter.textContent=`Showing ${students.length} of ${all.length} students`+(filterLabel?` · ${filterLabel}`:"");
+  tableFooter.textContent=students.length
+    ? `Showing ${start+1}–${start+pageStudents.length} of ${students.length} students`+(filterLabel?` · ${filterLabel}`:"")+(students.length!==all.length?` · ${all.length} in course`:"")
+    : `Showing 0 of ${all.length} students`+(filterLabel?` · ${filterLabel}`:"");
+  renderPager(pages);
 }
 
-studentSearch.oninput=renderStudentTable;
+/* Compact page list: 1 2 3 4 … 20  |  1 … 9 10 11 … 20  |  1 … 17 18 19 20 */
+function pageList(cur,total){
+  if(total<=7) return Array.from({length:total},(_,i)=>i+1);
+  const set=new Set([1,total,cur-1,cur,cur+1]);
+  if(cur<=3) [2,3,4].forEach(n=>set.add(n));
+  if(cur>=total-2) [total-3,total-2,total-1].forEach(n=>set.add(n));
+  const nums=[...set].filter(n=>n>=1&&n<=total).sort((a,b)=>a-b);
+  const out=[];
+  nums.forEach((n,i)=>{
+    const prev=nums[i-1];
+    if(i&&n-prev===2) out.push(prev+1);
+    else if(i&&n-prev>2) out.push("…");
+    out.push(n);
+  });
+  return out;
+}
+function renderPager(pages){
+  const hadFocus=studentPager.contains(document.activeElement);
+  studentPager.innerHTML="";
+  studentPager.hidden=pages<=1;
+  if(pages<=1) return;
+  const go=page=>{ studentPage=page; renderStudentTable(); };
+  const btn=(label,page,aria,disabled,current)=>{
+    const b=document.createElement("button");
+    b.type="button"; b.className="pg-btn"+(current?" on":""); b.textContent=label;
+    b.setAttribute("aria-label",aria); b.disabled=!!disabled; b.dataset.page=page;
+    if(current) b.setAttribute("aria-current","page");
+    b.onclick=()=>go(page);
+    return b;
+  };
+  studentPager.appendChild(btn("‹",studentPage-1,"Previous page",studentPage===1,false));
+  pageList(studentPage,pages).forEach(item=>{
+    if(item==="…"){ const gap=document.createElement("span"); gap.className="pg-gap"; gap.textContent="…"; gap.setAttribute("aria-hidden","true"); studentPager.appendChild(gap); }
+    else studentPager.appendChild(btn(String(item),item,`Page ${item}`,false,item===studentPage));
+  });
+  studentPager.appendChild(btn("›",studentPage+1,"Next page",studentPage===pages,false));
+  if(hadFocus){ const cur=studentPager.querySelector(".pg-btn.on"); if(cur) cur.focus(); }
+}
+
+studentSearch.oninput=()=>{ studentPage=1; renderStudentTable(); };
 
 /* Professor name shown on the grading screen (same value the report uses) */
 let profEditing=false;
@@ -1032,6 +1277,27 @@ profEdit.onblur=()=>commitProfessor(true);
 
 
 downloadTop.onclick=()=>{ if(!download.disabled) download.click(); };
+
+/* Logo -> back to the home (first) screen, after a browser confirmation */
+const brandLogo=document.querySelector(".brand-logo-crop");
+brandLogo.setAttribute("role","button");
+brandLogo.setAttribute("tabindex","0");
+brandLogo.setAttribute("aria-label","Back to home page");
+brandLogo.setAttribute("title","Back to home page");
+function goHome(){
+  if(dashboardScreen.hidden) return; /* already on the first screen */
+  if(!confirm("Return to the home page?\n\nYour current grading session and any changes will be lost.")) return;
+  if(profEditing) commitProfessor(false);
+  clearSelectedFile();
+  setChartMode("marks");
+  studentSearch.value="";
+  dashboardScreen.hidden=true;
+  setupScreen.hidden=false;
+  renderProfessor();
+  window.scrollTo(0,0);
+}
+brandLogo.onclick=goHome;
+brandLogo.onkeydown=e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); goHome(); } };
 new MutationObserver(()=>{ downloadTop.disabled=download.disabled; }).observe(download,{attributes:true,attributeFilter:["disabled"]});
 
 GRADES.forEach(g=>gradeFilter.add(new Option(g,g)));
@@ -1041,7 +1307,7 @@ function syncFilterUI(){
   gradeFilter.classList.toggle("on",filterMode==="grade");
   if(filterMode!=="grade") gradeFilter.value="";
 }
-function setStudentFilter(mode){ filterMode=mode; syncFilterUI(); renderStudentTable(); }
+function setStudentFilter(mode){ filterMode=mode; studentPage=1; syncFilterUI(); renderStudentTable(); }
 filterTop5.onclick=()=>setStudentFilter(filterMode==="top"?"":"top");
 filterBottom5.onclick=()=>setStudentFilter(filterMode==="bottom"?"":"bottom");
 gradeFilter.onchange=()=>setStudentFilter(gradeFilter.value?"grade":"");
